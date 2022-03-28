@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 
 
 
-dotenv.config({path: './varibales.env'});
+dotenv.config({path: './variables.env'});
 
 const NAMESPACE = 'Server';
 const app = express();
