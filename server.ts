@@ -3,6 +3,7 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logging from './config/logging';
+import mongoose from 'mongoose';
 
 /* Routes Import */
 
@@ -12,6 +13,12 @@ dotenv.config({path: './varibales.env'});
 
 const NAMESPACE = 'Server';
 const app = express();
+
+/* Connect to MongoDB */
+mongoose
+    .connect( `mongodb+srv://test:test@clustermecanic.urj1r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
+    .then(() => logging.info(NAMESPACE, `DATABASE [Online] => Name: ${process.env.DB_NAME}`))
+    .catch((error) => logging.error(NAMESPACE, error.message, error));
 
 /* Logging the request */
 
