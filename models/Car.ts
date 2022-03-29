@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import IVehiculo from '../interfaces/vehiculo';
+import IVehiculo from '../interfaces/car';
 
 const VehiculoSchema: Schema = new Schema(
     {
@@ -8,7 +8,7 @@ const VehiculoSchema: Schema = new Schema(
         ano: { type: String},
         color: { type: String},
         patente: { type: String, unique: true},
-        cliente: { type: Schema.Types.ObjectId, ref: 'cliente' },
+        clienteId: { type: Schema.Types.ObjectId, ref: 'clientes' },
     },
     {
         timestamps: true

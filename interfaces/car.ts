@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import ICliente from './cliente';
+import IClient from './client';
 
 export default interface IVehiculo extends Document {
     marca: string;
@@ -7,5 +7,5 @@ export default interface IVehiculo extends Document {
     ano: string;
     color: string;
     patente: string;
-    cliente: ICliente['_id'];
+    clientId: IClient['_id'];
 }

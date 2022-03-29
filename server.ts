@@ -6,7 +6,9 @@ import logging from './config/logging';
 import mongoose from 'mongoose';
 
 /* Routes Import */
-
+import carRoutes from './routes/car';
+import clientRoutes from './routes/client';
+import voucherRoutes from './routes/voucher';
 
 
 dotenv.config({path: './variables.env'});
@@ -16,9 +18,9 @@ const app = express();
 
 /* Connect to MongoDB */
 mongoose
-    .connect( `mongodb+srv://test:test@clustermecanic.urj1r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
+    .connect( `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER}@clustermecanic.urj1r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
     .then(() => logging.info(NAMESPACE, `DATABASE [Online] => Name: ${process.env.DB_NAME}`))
-    .catch((error) => logging.error(NAMESPACE, error.message, error));
+    .catch((error:any) => logging.error(NAMESPACE, error.message, error));
 
 /* Logging the request */
 
@@ -36,6 +38,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /* Routes */
+app.use('/car', carRoutes);
+app.use('/client', clientRoutes);
+app.use('/voucher', voucherRoutes);
+
+
 
 /* Error handling */
 app.use((req, res, next) => {
