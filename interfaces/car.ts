@@ -1,11 +1,11 @@
 import { Document } from 'mongoose';
 import IClient from './client';
 
-export default interface IVehiculo extends Document {
-    marca: string;
-    modelo: string;
-    ano: string;
-    color: string;
-    patente: string;
+export default interface ICar extends Document {
+    brand: string;
+    model: string;
+    year: string;
+    colour: string;
+    patent: string;
     clientId: IClient['_id'];
 }

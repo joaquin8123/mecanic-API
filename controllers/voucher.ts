@@ -7,7 +7,7 @@ const NAMESPACE = 'Vehiculo Controller';
 const create = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, `Crear vehiculo Method`);
     try {
-        const  { marca, modelo, ano, patente, color, clienteId } = req.body;
+        const  { clientId } = req.body;
         // const vehiculo = new Vehiculo({
         //     marca,
         //     modelo,

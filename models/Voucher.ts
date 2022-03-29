@@ -2,18 +2,18 @@ import mongoose, { Schema } from 'mongoose';
 
 const ComprobanteSchema: Schema = new Schema(
     {
-        fecha: {
+        date: {
             type: String
         },
-        total: {
+        amount: {
             type: Number
         },
-        cliente: { type: Schema.Types.ObjectId, ref: 'clientes' },
-        servicios: [{ type: Schema.Types.ObjectId, ref: 'servicios' }]
+        client: { type: Schema.Types.ObjectId, ref: 'clients' },
+        services: [{ type: Schema.Types.ObjectId, ref: 'servicies' }]
     },
     {
         timestamps: true
     }
 );
 
-export default mongoose.model('Comprobantes', ComprobanteSchema);
+export default mongoose.model('Voucher', ComprobanteSchema);
