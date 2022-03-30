@@ -8,8 +8,9 @@ const ComprobanteSchema: Schema = new Schema(
         amount: {
             type: Number
         },
-        client: { type: Schema.Types.ObjectId, ref: 'clients' },
-        services: [{ type: Schema.Types.ObjectId, ref: 'servicies' }]
+        clientId: { type: Schema.Types.ObjectId, ref: 'clients' },
+        carId: { type: Schema.Types.ObjectId, ref: 'cars' },
+        services: [{ type: Schema.Types.ObjectId, ref: 'services' }]
     },
     {
         timestamps: true

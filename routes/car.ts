@@ -8,5 +8,6 @@ router.delete('/:id', carController.deleteCar);
 router.put('/:id', carController.edit);
 router.get('/', carController.getAll);
 router.get('/:id', carController.getById);
+router.get('/history/:id',carController.history)
 
 export = router;

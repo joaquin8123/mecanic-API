@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import carRoutes from './routes/car';
 import clientRoutes from './routes/client';
 import voucherRoutes from './routes/voucher';
+import serviceRoutes from './routes/service'
 
 
 dotenv.config({path: './variables.env'});
@@ -41,6 +42,8 @@ app.use(bodyParser.json());
 app.use('/car', carRoutes);
 app.use('/client', clientRoutes);
 app.use('/voucher', voucherRoutes);
+app.use('/service', serviceRoutes);
+
 
 
 

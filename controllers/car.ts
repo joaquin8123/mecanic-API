@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import Voucher from '../models/Voucher';
 import logging from '../config/logging';
 import Car from '../models/Car'
 
@@ -54,6 +55,31 @@ const getById = async (req: Request, res: Response) => {
     }
 };
 
+const history = async (req: Request, res: Response) => {
+    logging.info(NAMESPACE, 'GetHistory Method');
+    try {
+        const carId  = req.params.id
+        let serviceList:Array<object>[]
+        const vouchers = await Voucher.find({
+            where: {
+               carId: carId
+            }
+        })
+        await Promise.all([...vouchers.map(async(voucher:any) => {
+            voucher.services.filter( (service:any) =>{
+                console.log(typeof serviceList)
+                serviceList.filter( (serviceId:any) =>{
+                    
+                })
+            })
+        })]);
+        return res.status(200).json({ message: 'GET_CAR_SUCCESS', serviceList })
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+    }
+};
+
 const edit = async(req: Request, res: Response) => {
     logging.info(NAMESPACE, `Crear vehiculo`);
     try {
@@ -91,5 +117,6 @@ export default {
     deleteCar,
     edit,
     getById,
-    getAll
+    getAll,
+    history
 };
