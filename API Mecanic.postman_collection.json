@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "99a6153d-46b1-4555-ae8f-10a4862fc95c",
+		"name": "API Mecanic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Vehiculos",
+			"item": [
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brand\": \"honda2\",\r\n    \"model\" : \"agile\",\r\n    \"year\" : \"2012\",\r\n    \"patent\" : \"a2f232\",\r\n    \"colour\": \"blanco\",\r\n    \"clientId\": \"6244ed3c010e3e8620a961e3\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/car/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "marca",
+									"value": "chevrolet",
+									"type": "text"
+								},
+								{
+									"key": "modelo",
+									"value": "agile",
+									"type": "text"
+								},
+								{
+									"key": "ano",
+									"value": "2012",
+									"type": "text"
+								},
+								{
+									"key": "patente",
+									"value": "asd125",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "blanco",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3307/car/6245c86a0915197e08feb2b8",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								"6245c86a0915197e08feb2b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3307/car/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"brand\": \"chevrolet\",\r\n    \"model\" : \"agile\",\r\n    \"year\" : \"2012\",\r\n    \"patent\" : \"asd123\",\r\n    \"colour\": \"gris\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/car/6245c86a0915197e08feb2b8",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								"6245c86a0915197e08feb2b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marca\": \"chevrolet\",\r\n    \"modelo\" : \"agile\",\r\n    \"ano\" : \"2012\",\r\n    \"patente\" : \"asd123\",\r\n    \"color\": \"blanco\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/car/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6244ed87010e3e8620a961e7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "history",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "marca",
+									"value": "chevrolet",
+									"type": "text"
+								},
+								{
+									"key": "modelo",
+									"value": "agile",
+									"type": "text"
+								},
+								{
+									"key": "ano",
+									"value": "2012",
+									"type": "text"
+								},
+								{
+									"key": "patente",
+									"value": "asd125",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "blanco",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3307/car/history/6245c86a0915197e08feb2b8",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"car",
+								"history",
+								"6245c86a0915197e08feb2b8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Joaquin\",\r\n    \"lastName\" : \"Suarez\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/client/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"client",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3307/client/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"client",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comprobantes",
+			"item": [
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carId\": \"6245c86a0915197e08feb2b8\",\r\n    \"services\" : [\"6245c8ab0915197e08feb2c0\"]\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/voucher/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"voucher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lavado\",\r\n    \"price\": \"150\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/voucher/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"voucher",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Service",
+			"item": [
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lavado\",\r\n    \"price\": \"150\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/service/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"service",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lavado\",\r\n    \"price\": \"150\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3307/service/",
+							"host": [
+								"localhost"
+							],
+							"port": "3307",
+							"path": [
+								"service",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
