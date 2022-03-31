@@ -7,5 +7,5 @@ export default interface ICar extends Document {
     year: string;
     colour: string;
     patent: string;
-    clientId: IClient['_id'];
+    clientId?: IClient['_id'];
 }

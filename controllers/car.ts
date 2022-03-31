@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import Voucher from '../models/Voucher';
 import logging from '../config/logging';
 import Car from '../models/Car'
+import ICar from '../interfaces/car';
+
 
 const NAMESPACE = 'Car Controller';
 
@@ -9,7 +11,7 @@ const create = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, `Create car Method`);
     try {
         const  { brand, model, year, patent, colour, clientId } = req.body;
-        const car = new Car({
+        const car: ICar = new Car({
             brand,
             model,
             year,
@@ -19,8 +21,8 @@ const create = async (req: Request, res: Response) => {
         })
         return car
             .save()
-            .then((car) => res.status(201).json({ message: 'CREATE_CAR_SUCCESS', data: car }))
-            .catch((error) => res.status(400).json({ message: 'CREATE_CAR_ERROR', data: error }));
+            .then((car: ICar) => res.status(201).json({ message: 'CREATE_CAR_SUCCESS', data: car }))
+            .catch((error: Error) => res.status(400).json({ message: 'CREATE_CAR_ERROR', data: error }));
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'CREATE_ERROR', data: error })
@@ -32,7 +34,7 @@ const create = async (req: Request, res: Response) => {
 const getAll = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, 'GetAllVehiculo Method');
     try {
-        const cars = await Car.find()
+        const cars: ICar[] = await Car.find()
         .populate('clientId', 'name lastName', 'Client')
         .exec()
         return res.status(200).json({ message: 'GET_ALL_SUCCESS', data: cars  })
@@ -45,9 +47,11 @@ const getAll = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, 'GetVehiculoById Method');
     try {
-        const carId  = req.params.id
-        const car = await Car.findById(carId)
-        if (!car) res.status(400).json({ message: 'GET_CAR_UNEXIST' })
+        const carId: ICar['_id']  = req.params.id
+        const car: ICar= await Car.findById(carId)
+        .populate('clientId', 'name lastName', 'Client')
+        .exec()
+        if (!car) return res.status(400).json({ message: 'GET_CAR_UNEXIST' })
         return res.status(200).json({ message: 'GET_CAR_SUCCESS', data: car  })
     } catch (error) {
         console.error(error);
@@ -81,19 +85,19 @@ const history = async (req: Request, res: Response) => {
 };
 
 const edit = async(req: Request, res: Response) => {
-    logging.info(NAMESPACE, `Crear vehiculo`);
+    logging.info(NAMESPACE, `Edit vehiculo`);
     try {
         const body = req.body;
-        const carId = req.params.id
-        const car = await Car.findById(carId);
+        const carId: ICar['_id'] = req.params.id
+        const car: ICar = await Car.findById(carId);
 
         if (!car) return res.status(400).json({ message: 'CAR_NOT_EXIST' });
 
-        const carUpdated = await Car.findByIdAndUpdate(car, body, { new: true });
+        const carUpdated :ICar= await Car.findByIdAndUpdate(car, body, { new: true });
         if (!carUpdated) res.status(400).json({ message: 'UPDATE_CAR_ERROR' });
         return res.status(200).json({ message: 'UPDATE_CAR_SUCCESS', data: carUpdated });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'UPDATE_CAR_ERROR', data: error });
     }
@@ -103,7 +107,7 @@ const edit = async(req: Request, res: Response) => {
 const deleteCar = async(req: Request, res: Response) => {
     logging.info(NAMESPACE, `Eliminar vehiculo`);
     try {
-        const carId = req.params.id
+        const carId: ICar['_id'] = req.params.id
         await Car.findByIdAndDelete(carId);
         return res.status(200).json({ message: 'DELETE_CAR_SUCCESS'});
     } catch (error) {
