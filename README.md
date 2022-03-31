@@ -26,6 +26,9 @@ It is developed with nodejs, Express, Mongoose and TypeScript.
 | DeleteCar       | `/car/:id` | DELETE         | - 
 | GetHistoryCar       | `car/history/:id` | GET         | - 
 
+### Collection of Postam
+Inside the repository you can find the collection
+
 ### Diagram database
 ##
 ![BD](BD.JPG)
