@@ -3,6 +3,8 @@ import Voucher from '../models/Voucher';
 import logging from '../config/logging';
 import Car from '../models/Car'
 import ICar from '../interfaces/car';
+import IService from '../interfaces/service';
+import IVoucher from '../interfaces/voucher';
 
 
 const NAMESPACE = 'Car Controller';
@@ -63,20 +65,17 @@ const history = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, 'GetHistory Method');
     try {
         const carId  = req.params.id
-        let serviceList:Array<object>[]
+        let serviceList:IService['_id'] = []
         const vouchers = await Voucher.find({
             where: {
                carId: carId
             }
         })
-        await Promise.all([...vouchers.map(async(voucher:any) => {
-            voucher.services.filter( (service:any) =>{
-                console.log(typeof serviceList)
-                serviceList.filter( (serviceId:any) =>{
-                    
-                })
+        vouchers.map(async(voucher:IVoucher) => {
+            voucher.services.filter( (serviceId:IService['_id']) =>{
+                serviceList.push(serviceId)
             })
-        })]);
+        });
         return res.status(200).json({ message: 'GET_CAR_SUCCESS', serviceList })
     } catch (error) {
         console.error(error);
