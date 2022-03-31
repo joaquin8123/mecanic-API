@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Service from '../models/Service'
 import logging from '../config/logging';
-//import { getAmount } from '../helpers/getAmount'
+import { getAmount } from '../helpers/getAmount'
 import Car from '../models/Car'
 import Voucher from '../models/Voucher'
 import IVoucher from '../interfaces/voucher'
@@ -19,10 +19,7 @@ const create = async (req: Request, res: Response) => {
         const car: ICar = await Car.findById(carId)
         .populate('clientId', 'name lastName', 'Client')
         .exec()
-        await Promise.all([...services.map(async(serviceId:IService['_id']) => {
-            const service: IService = await Service.findById(serviceId)
-            amount += service.price
-        })]);
+        amount = await getAmount(services)
         const body = {
             date: moment(),
             clientId: car.clientId._id,
@@ -30,11 +27,11 @@ const create = async (req: Request, res: Response) => {
             car: car._id,
             services: services
         }
-        const voucher: IVoucher = new Voucher(body)
-            return voucher
-                .save()
-                .then((voucher:IVoucher) => res.status(201).json({ message: 'CREATE_SUCCESS', data: voucher }))
-                .catch((error:Error) => res.status(400).json({ message: 'CREATE_ERROR', data: error }));
+        // const voucher: IVoucher = new Voucher(body)
+        //     return voucher
+        //         .save()
+        //         .then((voucher) => res.status(201).json({ message: 'CREATE_SUCCESS', data: voucher }))
+        //         .catch((error) => res.status(400).json({ message: 'CREATE_ERROR', data: error }));
         } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'CREATE_ERROR', data: error })
