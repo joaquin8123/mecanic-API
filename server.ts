@@ -21,7 +21,7 @@ const app = express();
 mongoose
     .connect( `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER}@clustermecanic.urj1r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
     .then(() => logging.info(NAMESPACE, `DATABASE [Online] => Name: ${process.env.DB_NAME}`))
-    .catch((error:any) => logging.error(NAMESPACE, error.message, error));
+    .catch((error:Error) => logging.error(NAMESPACE, error.message, error));
 
 /* Logging the request */
 
@@ -44,12 +44,9 @@ app.use('/client', clientRoutes);
 app.use('/voucher', voucherRoutes);
 app.use('/service', serviceRoutes);
 
-
-
-
 /* Error handling */
 app.use((req, res, next) => {
-    const error = new Error('not found');
+    const error:Error = new Error('not found');
     return res.status(404).json({
         message: error.message
     });
