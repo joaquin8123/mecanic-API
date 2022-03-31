@@ -32,6 +32,7 @@ const voucherErrorsMessages = {
     GET_VOUCHERS_ERROR: `There was an error getting the vouchers.`,
     CREATE_VOUCHER_SUCCESS: 'Voucher created successfully.',
     CREATE_VOUCHER_ERROR: 'An error occurred while creating the voucher',
+    CREATE_VOUCHER_COLOUR_ERROR: "It is not allowed to paint cars gray"
 };
 
 const responseMessages: any = {

@@ -3,10 +3,7 @@ import IService from '../interfaces/service';
 
 const ServiceSchema: Schema = new Schema(
     {
-        name: {
-            type: String,
-            required: 'Name is required.'
-        },
+        name: { type: String, unique: true},
         price: {
             type: Number
         }

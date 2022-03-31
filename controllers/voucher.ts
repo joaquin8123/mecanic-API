@@ -14,6 +14,7 @@ const NAMESPACE = 'Voucher Controller';
 const create = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, `Crear vehiculo Method`);
     try {
+        let isValid:Boolean = true
         const  { carId, services } = req.body;
         let amount:number = 0
         const car: ICar = await Car.findById(carId)
@@ -21,8 +22,11 @@ const create = async (req: Request, res: Response) => {
         .exec()
         await Promise.all([...services.map(async(serviceId: IService['_id']) => {
             const service: IService = await Service.findById(serviceId)
+            if(car.colour.toLocaleLowerCase() == 'gris' && service.name.toLocaleLowerCase() == 'pintura') isValid = false
             amount += service.price
         })]);
+        
+        if(!isValid) return sendResponse(res,'CREATE_VOUCHER_COLOUR_ERROR',400)
 
         const body = {
             date: moment(),
