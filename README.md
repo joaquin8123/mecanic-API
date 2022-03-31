@@ -1,12 +1,8 @@
 # mecanic-API
-API REST that retrieves the market prices for trading pairs.
+API REST for mechanical service management.
 
-- An endpoint that is called with a pair name, and retrieves the tips of the orderbook
-- An endpoint that is called with the pair name, the operation type and the order size,
-and returns the price to execute the order considering its size
-- Support only the following trading pairs:
-  - BTC-USD
-  - ETH-USD
+
+It is developed with nodejs, Express, Mongoose and TypeScript.
 
 ### How to run server?
 
