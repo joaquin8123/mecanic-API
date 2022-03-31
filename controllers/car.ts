@@ -5,7 +5,7 @@ import Car from '../models/Car'
 import ICar from '../interfaces/car';
 import IService from '../interfaces/service';
 import IVoucher from '../interfaces/voucher';
-
+import sendResponse from '../helpers/buildResponse'
 
 const NAMESPACE = 'Car Controller';
 
@@ -23,11 +23,11 @@ const create = async (req: Request, res: Response) => {
         })
         return car
             .save()
-            .then((car: ICar) => res.status(201).json({ message: 'CREATE_CAR_SUCCESS', data: car }))
-            .catch((error: Error) => res.status(400).json({ message: 'CREATE_CAR_ERROR', data: error }));
+            .then((car) => sendResponse(res,'CREATE_CAR_SUCCESS',201,car))
+            .catch((error) => sendResponse(res,'CREATE_CAR_ERROR',400, error));
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'CREATE_ERROR', data: error })
+        return sendResponse(res,'CREATE_CAR_ERROR',500, error)
     }
 };
 
@@ -39,10 +39,10 @@ const getAll = async (req: Request, res: Response) => {
         const cars: ICar[] = await Car.find()
         .populate('clientId', 'name lastName', 'Client')
         .exec()
-        return res.status(200).json({ message: 'GET_ALL_SUCCESS', data: cars  })
+        return sendResponse(res,'GET_CARS_SUCCESS',200, cars)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+        return sendResponse(res,'GET_CARS_ERROR',500, error)
     }
 };
 
@@ -53,11 +53,11 @@ const getById = async (req: Request, res: Response) => {
         const car: ICar= await Car.findById(carId)
         .populate('clientId', 'name lastName', 'Client')
         .exec()
-        if (!car) return res.status(400).json({ message: 'GET_CAR_UNEXIST' })
-        return res.status(200).json({ message: 'GET_CAR_SUCCESS', data: car  })
+        if (!car) sendResponse(res,'GET_CAR_UNEXIST',400)
+        return sendResponse(res,'GET_CAR_SUCCESS',200, car)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+        return sendResponse(res,'GET_CARS_ERROR',500, error)
     }
 };
 
@@ -76,10 +76,10 @@ const history = async (req: Request, res: Response) => {
                 serviceList.push(serviceId)
             })
         });
-        return res.status(200).json({ message: 'GET_CAR_SUCCESS', serviceList })
+        return sendResponse(res,'HISTORY_CAR_SUCCESS',200, serviceList)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+        return sendResponse(res,'HISTORY_CAR_ERROR',500, error)
     }
 };
 
@@ -90,15 +90,15 @@ const edit = async(req: Request, res: Response) => {
         const carId: ICar['_id'] = req.params.id
         const car: ICar = await Car.findById(carId);
 
-        if (!car) return res.status(400).json({ message: 'CAR_NOT_EXIST' });
+        if (!car) return sendResponse(res,'GET_CAR_UNEXIST',400)
 
         const carUpdated :ICar= await Car.findByIdAndUpdate(car, body, { new: true });
-        if (!carUpdated) res.status(400).json({ message: 'UPDATE_CAR_ERROR' });
-        return res.status(200).json({ message: 'UPDATE_CAR_SUCCESS', data: carUpdated });
+        if (!carUpdated) sendResponse(res,'UPDATE_CAR_ERROR',400)
+        return sendResponse(res,'UPDATE_CAR_SUCCESS', 400, carUpdated)
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'UPDATE_CAR_ERROR', data: error });
+        return sendResponse(res,'UPDATE_CAR_ERROR', 500, error)
     }
     
 };
@@ -108,10 +108,10 @@ const deleteCar = async(req: Request, res: Response) => {
     try {
         const carId: ICar['_id'] = req.params.id
         await Car.findByIdAndDelete(carId);
-        return res.status(200).json({ message: 'DELETE_CAR_SUCCESS'});
+        return sendResponse(res,'DELETE_CAR_SUCCESS', 200)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'DELETE_CAR_ERROR', data: error });
+        return sendResponse(res,'DELETE_CAR_ERROR', 500, error)
     }
 };
 

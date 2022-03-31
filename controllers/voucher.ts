@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import Service from '../models/Service'
 import logging from '../config/logging';
-import { getAmount } from '../helpers/getAmount'
 import Car from '../models/Car'
 import Voucher from '../models/Voucher'
 import IVoucher from '../interfaces/voucher'
 import moment from 'moment';
 import ICar from '../interfaces/car';
-import IService from '../interfaces/service';
+import sendResponse from '../helpers/buildResponse'
+import IService from '../interfaces/service'
 
 const NAMESPACE = 'Voucher Controller';
 
@@ -19,7 +19,11 @@ const create = async (req: Request, res: Response) => {
         const car: ICar = await Car.findById(carId)
         .populate('clientId', 'name lastName', 'Client')
         .exec()
-        amount = await getAmount(services)
+        await Promise.all([...services.map(async(serviceId: IService['_id']) => {
+            const service: IService = await Service.findById(serviceId)
+            amount += service.price
+        })]);
+
         const body = {
             date: moment(),
             clientId: car.clientId._id,
@@ -27,25 +31,25 @@ const create = async (req: Request, res: Response) => {
             car: car._id,
             services: services
         }
-        // const voucher: IVoucher = new Voucher(body)
-        //     return voucher
-        //         .save()
-        //         .then((voucher) => res.status(201).json({ message: 'CREATE_SUCCESS', data: voucher }))
-        //         .catch((error) => res.status(400).json({ message: 'CREATE_ERROR', data: error }));
+        const voucher: IVoucher = new Voucher(body)
+            return voucher
+                .save()
+                .then((voucher) => sendResponse(res,'CREATE_VOUCHER_SUCCESS',201, voucher))
+                .catch((error) => sendResponse(res,'CREATE_VOUCHER_ERROR',400, error));
         } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'CREATE_ERROR', data: error })
-    }
+            console.error(error);
+            return sendResponse(res,'CREATE_VOUCHER_ERROR',500, error)
+        }
 };
 
 const getAll = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, 'GetAllVoucher Method');
     try {
         const vouchers: IVoucher[] = await Voucher.find()
-        return res.status(200).json({ message: 'GET_ALL_SUCCESS', data: vouchers  })
+        return sendResponse(res,'GET_VOUCHERS_SUCCESS',200, vouchers)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+        return sendResponse(res,'GET_VOUCHERS_ERROR',500, error)
     }
 };
 

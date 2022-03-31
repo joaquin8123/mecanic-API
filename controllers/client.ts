@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import IClient from '../interfaces/client';
 import logging from '../config/logging';
 import Client from '../models/Client'
+import sendResponse from '../helpers/buildResponse'
 
 const NAMESPACE = 'Client Controller';
 
@@ -15,11 +16,11 @@ const create = async (req: Request, res: Response) => {
         })
         return client
             .save()
-            .then((client: IClient) => res.status(201).json({ message: 'CREATE_SUCCESS', data: client }))
-            .catch((error: Error) => res.status(400).json({ message: 'CREATE_ERROR', data: error }));
+            .then((client: IClient) => sendResponse(res,'CREATE_CLIENTS_SUCCESS',201, client))
+            .catch((error: Error) => sendResponse(res,'CREATE_CLIENTS_ERROR',400, error));
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'CREATE_ERROR', data: error })
+        return sendResponse(res,'CREATE_CLIENTS_ERROR',500, error)
     }
 };
 
@@ -27,10 +28,10 @@ const getAll = async (req: Request, res: Response) => {
     logging.info(NAMESPACE, 'GetAllClients Method');
     try {
         const clients: IClient[] = await Client.find()
-        return res.status(200).json({ message: 'GET_ALL_SUCCESS', data: clients  })
+        return sendResponse(res,'GET_CLIENTS_SUCCESS',200, clients)
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'GET_CAR_ERROR', data: error  })
+        return sendResponse(res,'GET_CLIENTS_ERROR',500, error)
     }
 };
 
