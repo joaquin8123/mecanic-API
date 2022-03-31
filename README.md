@@ -25,3 +25,7 @@ It is developed with nodejs, Express, Mongoose and TypeScript.
 | EditCar       | `/car/:id` | PUT         | `{brand: "fordEdit", model: "focusEdit", year: "2012Edit", patent: "asd121Edit", colour: "blancoEdit"}`  
 | DeleteCar       | `/car/:id` | DELETE         | - 
 | GetHistoryCar       | `car/history/:id` | GET         | - 
+
+### Diagram database
+##
+![BD](BD.JPG)
